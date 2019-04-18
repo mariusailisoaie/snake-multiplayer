@@ -1,3 +1,5 @@
+const socket = io.connect('http://localhost:3000');
+
 const canvasBackgroundColor = '#e6f6ff';
 const snakeColor = '#006442';
 const headColor = '#00ab71';
