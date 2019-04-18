@@ -5,6 +5,8 @@ const borderColor = '#000';
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
+let dx = 20, dy = 0;
+
 const snake = new Snake();
 snake.snakeParts.forEach(snakePart => console.log(snakePart));
 
@@ -23,5 +25,27 @@ const drawSnake = () => {
   });
 }
 
+const moveSnake = () => {
+  const head = { x: snake.snakeParts[0].x + dx, y: snake.snakeParts[0].y + dy }
+  console.log(head);
+  snake.snakeParts.unshift(head);
+  snake.snakeParts.pop();
+}
+
+// Initial canvas and snake drawing
 paintCanvas();
 drawSnake();
+// moveSnake();
+
+// Update snake position
+const updateGame = () => {
+  paintCanvas();
+  drawSnake();
+  moveSnake();
+  
+  setTimeout(() => {
+    updateGame();
+  }, 500);
+}
+
+updateGame();
