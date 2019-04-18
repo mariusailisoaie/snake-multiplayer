@@ -26,7 +26,7 @@ const drawSnake = () => {
 
 const moveSnake = () => {
   const head = { x: snake.snakeParts[0].x + dx, y: snake.snakeParts[0].y + dy }
-  
+
   ctx.fillStyle = '#00ab71';
   ctx.strokestyle = borderColor;
   ctx.fillRect(head.x - dx, head.y - dy, 20, 20);
@@ -39,19 +39,19 @@ const moveSnake = () => {
 }
 
 document.addEventListener('keydown', e => {
-  if(e.code.toLowerCase() === 'arrowup') {
+  if (e.code.toLowerCase() === 'arrowup') {
     dx = 0;
     dy = -20;
-  } else if(e.code.toLowerCase() === 'arrowdown') {
+  } else if (e.code.toLowerCase() === 'arrowdown') {
     dx = 0;
     dy = 20;
-  } else if(e.code.toLowerCase() === 'arrowleft') {
+  } else if (e.code.toLowerCase() === 'arrowleft') {
     dx = -20;
     dy = 0;
-  } else if(e.code.toLowerCase() === 'arrowright') {
+  } else if (e.code.toLowerCase() === 'arrowright') {
     dx = 20;
     dy = 0;
-  } else if(e.key === 'q') {
+  } else if (e.key === 'q') {
     paintCanvas();
     drawSnake();
     moveSnake();
@@ -68,7 +68,7 @@ const updateGame = () => {
   paintCanvas();
   drawSnake();
   moveSnake();
-  
+
   setTimeout(() => {
     updateGame();
   }, 500);
