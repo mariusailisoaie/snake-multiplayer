@@ -1,5 +1,9 @@
 const socket = io.connect('http://localhost:3000');
 
+socket.on('snake', snakeData => {
+  console.log(snakeData);
+});
+
 const canvasBackgroundColor = '#e6f6ff';
 const snakeColor = '#006442';
 const headColor = '#00ab71';
@@ -62,7 +66,10 @@ const moveSnake = () => {
     initialFoodY = Math.floor(Math.random() * 20) * 20;
   }
 
-  // console.log('log: moveSnake -> head', head);
+  // console.log('log: moveSnake -> head', snake);
+
+  // Emit message to the server
+  socket.emit('snake', snake.snakeParts);
 }
 
 document.addEventListener('keydown', e => {
@@ -99,7 +106,7 @@ const updateGame = () => {
 
   setTimeout(() => {
     updateGame();
-  }, 100);
+  }, 400);
 }
 
 updateGame();
