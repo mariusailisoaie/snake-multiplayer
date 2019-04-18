@@ -60,7 +60,7 @@ const moveSnake = () => {
     initialFoodY = Math.floor(Math.random() * 20) * 20;
   }
 
-  console.log('log: moveSnake -> head', head);
+  // console.log('log: moveSnake -> head', head);
 }
 
 document.addEventListener('keydown', e => {
@@ -97,7 +97,7 @@ const updateGame = () => {
 
   setTimeout(() => {
     updateGame();
-  }, 500);
+  }, 100);
 }
 
-// updateGame();
+updateGame();
