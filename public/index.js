@@ -1,8 +1,22 @@
 const socket = io.connect('http://localhost:3000');
 
 socket.on('snake', snakeData => {
-  console.log(snakeData);
+  drawOtherSnakes(snakeData);
 });
+
+const drawOtherSnakes = (snakeData = []) => {
+  if (snakeData.length > 0) {
+    ctx.fillStyle = snakeColor;
+    snakeData.forEach(snakePart => {
+      ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
+      ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
+    });
+
+    ctx.fillStyle = headColor;
+    ctx.fillRect(snakeData[0].x, snakeData[0].y, 20, 20);
+    ctx.strokeRect(snakeData[0].x, snakeData[0].y, 20, 20);
+  }
+}
 
 socket.on('square', data => {
   ctx.fillStyle = 'black';
@@ -111,18 +125,19 @@ document.addEventListener('click', e => {
 
 // Initial canvas, snake and food drawing
 paintCanvas();
-// drawSnake();
+drawSnake();
 
 // Update snake position
 const updateGame = () => {
   moveSnake();
   paintCanvas();
   drawSnake();
+  drawOtherSnakes();
   drawFood();
 
   setTimeout(() => {
     updateGame();
-  }, 400);
+  }, 200);
 }
 
-// updateGame();
+updateGame();
