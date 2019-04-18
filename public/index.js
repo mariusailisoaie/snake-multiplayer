@@ -51,6 +51,10 @@ document.addEventListener('keydown', e => {
   } else if(e.code.toLowerCase() === 'arrowright') {
     dx = 20;
     dy = 0;
+  } else if(e.key === 'q') {
+    paintCanvas();
+    drawSnake();
+    moveSnake();
   }
 });
 
