@@ -1,5 +1,6 @@
 const canvasBackgroundColor = '#e6f6ff';
 const snakeColor = '#006442';
+const headColor = '#00ab71';
 const borderColor = '#000';
 
 const canvas = document.getElementById('canvas');
@@ -22,15 +23,14 @@ const drawSnake = () => {
     ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
     ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
   });
+
+  ctx.fillStyle = headColor;
+  ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
+  ctx.strokeRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
 }
 
 const moveSnake = () => {
   const head = { x: snake.snakeParts[0].x + dx, y: snake.snakeParts[0].y + dy }
-
-  ctx.fillStyle = '#00ab71';
-  ctx.strokestyle = borderColor;
-  ctx.fillRect(head.x - dx, head.y - dy, 20, 20);
-  ctx.strokeRect(head.x - dx, head.y - dy, 20, 20);
 
   snake.snakeParts.unshift(head);
   snake.snakeParts.pop();
