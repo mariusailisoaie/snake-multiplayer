@@ -5,7 +5,7 @@ const snakeParts = [
 ]
 
 class Snake {
-  constructor(snakeParts) {
+  constructor() {
     this.snakeParts = snakeParts;
   }
 }
