@@ -5,7 +5,7 @@ const borderColor = '#000';
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const snake = new Snake(snakeParts);
+const snake = new Snake();
 snake.snakeParts.forEach(snakePart => console.log(snakePart));
 
 const paintCanvas = () => {
