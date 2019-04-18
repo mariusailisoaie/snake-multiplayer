@@ -4,6 +4,11 @@ socket.on('snake', snakeData => {
   console.log(snakeData);
 });
 
+socket.on('square', data => {
+  ctx.fillStyle = 'black';
+  ctx.fillRect(data.squareX, data.squareY, 20, 20);
+});
+
 const canvasBackgroundColor = '#e6f6ff';
 const snakeColor = '#006442';
 const headColor = '#00ab71';
@@ -93,9 +98,20 @@ document.addEventListener('keydown', e => {
   }
 });
 
+document.addEventListener('click', e => {
+  // console.log(e);
+  ctx.fillStyle = 'black';
+  ctx.fillRect(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop, 20, 20);
+
+  socket.emit('square', {
+    squareX: e.clientX - canvas.offsetLeft,
+    squareY: e.clientY - canvas.offsetTop,
+  });
+});
+
 // Initial canvas, snake and food drawing
 paintCanvas();
-drawSnake();
+// drawSnake();
 
 // Update snake position
 const updateGame = () => {
@@ -109,4 +125,4 @@ const updateGame = () => {
   }, 400);
 }
 
-updateGame();
+// updateGame();
