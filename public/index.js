@@ -32,6 +32,22 @@ const moveSnake = () => {
   snake.snakeParts.pop();
 }
 
+document.addEventListener('keydown', e => {
+  if(e.code.toLowerCase() === 'arrowup') {
+    dx = 0;
+    dy = -20;
+  } else if(e.code.toLowerCase() === 'arrowdown') {
+    dx = 0;
+    dy = 20;
+  } else if(e.code.toLowerCase() === 'arrowleft') {
+    dx = -20;
+    dy = 0;
+  } else if(e.code.toLowerCase() === 'arrowright') {
+    dx = 20;
+    dy = 0;
+  }
+});
+
 // Initial canvas and snake drawing
 paintCanvas();
 drawSnake();
