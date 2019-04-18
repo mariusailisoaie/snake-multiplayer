@@ -32,20 +32,20 @@ const moveSnake = () => {
   ctx.fillRect(head.x - dx, head.y - dy, 20, 20);
   ctx.strokeRect(head.x - dx, head.y - dy, 20, 20);
 
-  console.log(head);
+  snake.snakeParts.unshift(head);
+  snake.snakeParts.pop();
 
   if (head.x === 400) {
     head.x = 0;
-  } else if (head.x === -40) {
-    head.x = 400;
-  } else if (head.y === 420) {
+  } else if (head.x === -20) {
+    head.x = 380;
+  } else if (head.y === 400) {
     head.y = 0;
-  } else if (head.y === -40) {
-    head.y = 400;
+  } else if (head.y === -20) {
+    head.y = 380;
   }
 
-  snake.snakeParts.unshift(head);
-  snake.snakeParts.pop();
+  console.log('log: moveSnake -> head', head);
 }
 
 document.addEventListener('keydown', e => {
@@ -62,22 +62,21 @@ document.addEventListener('keydown', e => {
     dx = 20;
     dy = 0;
   } else if (e.key === 'q') {
+    moveSnake();
     paintCanvas();
     drawSnake();
-    moveSnake();
   }
 });
 
 // Initial canvas and snake drawing
 paintCanvas();
 drawSnake();
-// moveSnake();
 
 // Update snake position
 const updateGame = () => {
+  moveSnake();
   paintCanvas();
   drawSnake();
-  moveSnake();
 
   setTimeout(() => {
     updateGame();
