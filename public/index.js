@@ -2,6 +2,7 @@ const canvasBackgroundColor = '#e6f6ff';
 const snakeColor = '#006442';
 const headColor = '#00ab71';
 const borderColor = '#000';
+const foodColor = '#513814';
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -27,6 +28,14 @@ const drawSnake = () => {
   ctx.fillStyle = headColor;
   ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
   ctx.strokeRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
+}
+
+let initialFoodX = Math.floor(Math.random() * 20) * 20;
+let initialFoodY = Math.floor(Math.random() * 20) * 20;
+
+const drawFood = (foodX = initialFoodX, foodY = initialFoodY) => {
+  ctx.fillStyle = foodColor;
+  ctx.fillRect(foodX, foodY, 20, 20);
 }
 
 const moveSnake = () => {
@@ -65,12 +74,14 @@ document.addEventListener('keydown', e => {
     moveSnake();
     paintCanvas();
     drawSnake();
+    drawFood();
   }
 });
 
-// Initial canvas and snake drawing
+// Initial canvas, snake and food drawing
 paintCanvas();
 drawSnake();
+drawFood(initialFoodX, initialFoodY);
 
 // Update snake position
 const updateGame = () => {
