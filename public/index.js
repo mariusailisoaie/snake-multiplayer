@@ -8,7 +8,6 @@ const ctx = canvas.getContext('2d');
 let dx = 20, dy = 0;
 
 const snake = new Snake();
-snake.snakeParts.forEach(snakePart => console.log(snakePart));
 
 const paintCanvas = () => {
   ctx.fillStyle = canvasBackgroundColor;
@@ -71,4 +70,4 @@ const updateGame = () => {
   }, 500);
 }
 
-updateGame();
+// updateGame();
