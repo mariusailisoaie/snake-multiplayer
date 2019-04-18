@@ -14,4 +14,9 @@ const io = socket(server);
 
 io.on('connection', socket => {
   console.log('connection made', socket.id);
+
+  socket.on('snake', snakeData => {
+    // console.log(snakeData);
+    socket.broadcast.emit('snake', snakeData);
+  });
 });
