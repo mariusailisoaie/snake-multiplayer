@@ -34,6 +34,16 @@ const moveSnake = () => {
 
   console.log(head);
 
+  if (head.x === 400) {
+    head.x = 0;
+  } else if (head.x === -40) {
+    head.x = 400;
+  } else if (head.y === 420) {
+    head.y = 0;
+  } else if (head.y === -40) {
+    head.y = 400;
+  }
+
   snake.snakeParts.unshift(head);
   snake.snakeParts.pop();
 }
