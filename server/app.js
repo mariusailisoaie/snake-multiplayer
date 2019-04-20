@@ -19,9 +19,4 @@ io.on('connection', socket => {
     // console.log(snakeData);
     socket.broadcast.emit('snake', snakeData);
   });
-
-  socket.on('square', data => {
-    console.log(data);
-    socket.broadcast.emit('square', data);
-  });
 });

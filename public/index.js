@@ -112,17 +112,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
-document.addEventListener('click', e => {
-  // console.log(e);
-  ctx.fillStyle = 'black';
-  ctx.fillRect(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop, 20, 20);
-
-  socket.emit('square', {
-    squareX: e.clientX - canvas.offsetLeft,
-    squareY: e.clientY - canvas.offsetTop,
-  });
-});
-
 // Initial canvas, snake and food drawing
 paintCanvas();
 drawSnake();
