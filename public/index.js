@@ -1,43 +1,23 @@
 const socket = io.connect('http://localhost:3000');
 
-socket.on('snake', snakeData => {
-  ctx.fillStyle = 'red';
-  snakeData.forEach(snakePart => {
-    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
-  });
-});
-
-const canvasBackgroundColor = '#e6f6ff';
-const snakeColor = '#006442';
-const headColor = '#00ab71';
-const borderColor = '#000';
-const foodColor = '#513814';
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 let dx = 20, dy = 0;
 
-const snake = new Snake();
+const snakeParts = [
+  { x: 180, y: 200 },
+  { x: 160, y: 200 },
+  { x: 140, y: 200 },
+];
+
+const snake = new Snake(snakeParts);
 
 const paintCanvas = () => {
   ctx.fillStyle = canvasBackgroundColor;
   ctx.strokestyle = borderColor;
-  ctx.fillRect(0, 0, canvas.clientWidth, canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
-}
-
-const drawSnake = () => {
-  ctx.fillStyle = snakeColor;
-  snake.snakeParts.forEach(snakePart => {
-    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
-  });
-
-  ctx.fillStyle = headColor;
-  ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
-  ctx.strokeRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
 }
 
 let initialFoodX = Math.floor(Math.random() * 20) * 20;
@@ -48,34 +28,7 @@ const drawFood = (foodX = initialFoodX, foodY = initialFoodY) => {
   ctx.fillRect(foodX, foodY, 20, 20);
 }
 
-const moveSnake = () => {
-  const head = { x: snake.snakeParts[0].x + dx, y: snake.snakeParts[0].y + dy }
-
-  snake.snakeParts.unshift(head);
-  snake.snakeParts.pop();
-
-  if (head.x === 400) {
-    head.x = 0;
-  } else if (head.x === -20) {
-    head.x = 380;
-  } else if (head.y === 400) {
-    head.y = 0;
-  } else if (head.y === -20) {
-    head.y = 380;
-  }
-
-  // Emit message to the server
-  socket.emit('snake', snake.snakeParts);
-
-  // Snake ate food logic
-  if (head.x === initialFoodX && head.y === initialFoodY) {
-    initialFoodX = Math.floor(Math.random() * 20) * 20;
-    initialFoodY = Math.floor(Math.random() * 20) * 20;
-  }
-
-  // console.log('log: moveSnake -> head', snake);
-}
-
+// Change snake direction using arrow keys 
 document.addEventListener('keydown', e => {
   if (e.code.toLowerCase() === 'arrowup') {
     dx = 0;
@@ -90,27 +43,27 @@ document.addEventListener('keydown', e => {
     dx = 20;
     dy = 0;
   } else if (e.key === 'q') {
-    moveSnake();
+    snake.moveSnake();
     paintCanvas();
-    drawSnake();
+    snake.drawSnake();
     drawFood();
   }
 });
 
 // Initial canvas, snake and food drawing
 paintCanvas();
-drawSnake();
+snake.drawSnake();
 
 // Update snake position
 const updateGame = () => {
-  moveSnake();
+  snake.moveSnake();
   paintCanvas();
-  drawSnake();
+  snake.drawSnake();
   drawFood();
 
   setTimeout(() => {
     updateGame();
-  }, 200);
+  }, 300);
 }
 
 updateGame();
