@@ -1,7 +1,11 @@
 const socket = io.connect('http://localhost:3000');
 
 socket.on('snake', snakeData => {
-
+  ctx.fillStyle = 'red';
+  snakeData.forEach(snakePart => {
+    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
+    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
+  });
 });
 
 const canvasBackgroundColor = '#e6f6ff';
@@ -60,6 +64,9 @@ const moveSnake = () => {
     head.y = 380;
   }
 
+  // Emit message to the server
+  socket.emit('snake', snake.snakeParts);
+
   // Snake ate food logic
   if (head.x === initialFoodX && head.y === initialFoodY) {
     initialFoodX = Math.floor(Math.random() * 20) * 20;
@@ -67,9 +74,6 @@ const moveSnake = () => {
   }
 
   // console.log('log: moveSnake -> head', snake);
-
-  // Emit message to the server
-  socket.emit('snake', snake.snakeParts);
 }
 
 document.addEventListener('keydown', e => {
