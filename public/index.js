@@ -1,26 +1,7 @@
 const socket = io.connect('http://localhost:3000');
 
 socket.on('snake', snakeData => {
-  drawOtherSnakes(snakeData);
-});
 
-const drawOtherSnakes = (snakeData = []) => {
-  if (snakeData.length > 0) {
-    ctx.fillStyle = snakeColor;
-    snakeData.forEach(snakePart => {
-      ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-      ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
-    });
-
-    ctx.fillStyle = headColor;
-    ctx.fillRect(snakeData[0].x, snakeData[0].y, 20, 20);
-    ctx.strokeRect(snakeData[0].x, snakeData[0].y, 20, 20);
-  }
-}
-
-socket.on('square', data => {
-  ctx.fillStyle = 'black';
-  ctx.fillRect(data.squareX, data.squareY, 20, 20);
 });
 
 const canvasBackgroundColor = '#e6f6ff';
@@ -121,7 +102,6 @@ const updateGame = () => {
   moveSnake();
   paintCanvas();
   drawSnake();
-  drawOtherSnakes();
   drawFood();
 
   setTimeout(() => {
