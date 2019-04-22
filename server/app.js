@@ -16,7 +16,7 @@ io.on('connection', socket => {
   console.log('connection made', socket.id);
 
   socket.on('snake', snakeData => {
-    // console.log(snakeData);
+    console.log(socket.id, snakeData, snakeData.length);
     socket.broadcast.emit('snake', snakeData);
   });
 });
