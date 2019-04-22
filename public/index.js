@@ -57,13 +57,23 @@ snake.drawSnake();
 // Update snake position
 const updateGame = () => {
   snake.moveSnake();
-  paintCanvas();
-  snake.drawSnake();
-  drawFood();
 
   setTimeout(() => {
     updateGame();
   }, 1000);
 }
+
+socket.on('snake', snakeData => {
+  paintCanvas();
+
+  ctx.fillStyle = 'red';
+  snakeData.forEach(snakePart => {
+    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
+    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
+  });
+
+  snake.drawSnake();
+  drawFood();
+});
 
 updateGame();
