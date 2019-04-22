@@ -63,7 +63,7 @@ const updateGame = () => {
 
   setTimeout(() => {
     updateGame();
-  }, 300);
+  }, 1000);
 }
 
 updateGame();
