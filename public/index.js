@@ -56,9 +56,6 @@ const enemyCoordinates = document.getElementById('enemyCoordinates');
 paintCanvas();
 snake.drawSnake();
 
-// Emit message to the server
-socket.emit('snake', snake.snakeParts);
-
 socket.on('snake', snakeArray => {
   paintCanvas();
   snake.drawSnake();
@@ -72,16 +69,3 @@ socket.on('snake', snakeArray => {
   snakeCoordinates.innerHTML = `Snake: ${snake.snakeParts[0].x} x ${snake.snakeParts[0].y}`
   enemyCoordinates.innerHTML = `Enemy: ${snakeArray[0].x} x ${snakeArray[0].y}`
 });
-
-const update = () => {
-  snake.moveSnake();
-  paintCanvas();
-  snake.drawSnake();
-  socket.emit('snake', snake.snakeParts);
-
-  setTimeout(() => {
-    update();
-  }, 1000);
-}
-
-// update();
