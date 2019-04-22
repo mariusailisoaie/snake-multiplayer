@@ -1,17 +1,29 @@
+const canvasBackgroundColor = '#e6f6ff';
+const borderColor = '#000';
+const foodColor = '#513814';
+const snakeColor = '#006442';
+const headColor = '#00ab71';
+
 const socket = io.connect('http://localhost:3000');
+
+socket.on('snake', snakeData => {
+  console.log('log: snakeData', snakeData[0]);
+  paintCanvas();
+  drawFood();
+
+  ctx.fillStyle = snakeColor;
+  snakeData.forEach(snakePart => {
+    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
+    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
+  });
+
+  ctx.fillStyle = headColor;
+  ctx.fillRect(snakeData[0].x, snakeData[0].y, 20, 20);
+  ctx.strokeRect(snakeData[0].x, snakeData[0].y, 20, 20);
+});
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
-let dx = 20, dy = 0;
-
-const snakeParts = [
-  { x: 180, y: 200 },
-  { x: 160, y: 200 },
-  { x: 140, y: 200 },
-];
-
-const snake = new Snake(snakeParts);
 
 const paintCanvas = () => {
   ctx.fillStyle = canvasBackgroundColor;
@@ -28,44 +40,32 @@ const drawFood = (foodX = initialFoodX, foodY = initialFoodY) => {
   ctx.fillRect(foodX, foodY, 20, 20);
 }
 
+// Initial canvas, snake and food drawing
+paintCanvas();
+drawFood();
+
 // Change snake direction using arrow keys 
 document.addEventListener('keydown', e => {
   if (e.code.toLowerCase() === 'arrowup') {
     dx = 0;
     dy = -20;
+    socket.emit('changeDirection', { dx, dy });
   } else if (e.code.toLowerCase() === 'arrowdown') {
     dx = 0;
     dy = 20;
+    socket.emit('changeDirection', { dx, dy });
   } else if (e.code.toLowerCase() === 'arrowleft') {
     dx = -20;
     dy = 0;
+    socket.emit('changeDirection', { dx, dy });
   } else if (e.code.toLowerCase() === 'arrowright') {
     dx = 20;
     dy = 0;
+    socket.emit('changeDirection', { dx, dy });
   } else if (e.key === 'q') {
-    snake.moveSnake();
-    paintCanvas();
-    snake.drawSnake();
-    socket.emit('snake', snake.snakeParts);
+    console.log('q');
   }
 });
-const snakeCoordinates = document.getElementById('snakeCoordinates');
-const enemyCoordinates = document.getElementById('enemyCoordinates');
 
-// Initial canvas, snake and food drawing
-paintCanvas();
-snake.drawSnake();
-
-socket.on('snake', snakeArray => {
-  paintCanvas();
-  snake.drawSnake();
-
-  snakeArray.forEach(snakePart => {
-    ctx.fillStyle = 'red';
-    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
-  });
-
-  snakeCoordinates.innerHTML = `Snake: ${snake.snakeParts[0].x} x ${snake.snakeParts[0].y}`
-  enemyCoordinates.innerHTML = `Enemy: ${snakeArray[0].x} x ${snakeArray[0].y}`
-});
+// const snakeCoordinates = document.getElementById('snakeCoordinates');
+// const enemyCoordinates = document.getElementById('enemyCoordinates');

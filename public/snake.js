@@ -1,27 +1,11 @@
-const canvasBackgroundColor = '#e6f6ff';
-const snakeColor = '#006442';
-const headColor = '#00ab71';
-const borderColor = '#000';
-const foodColor = '#513814';
-
 class Snake {
-  constructor(snakeParts) {
+  constructor(snakeParts, dx, dy) {
     this.snakeParts = snakeParts;
+    this.dx = dx;
+    this.dy = dy;
   }
 
-  drawSnake = () => {
-    ctx.fillStyle = snakeColor;
-    this.snakeParts.forEach(snakePart => {
-      ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-      ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
-    });
-
-    ctx.fillStyle = headColor;
-    ctx.fillRect(this.snakeParts[0].x, this.snakeParts[0].y, 20, 20);
-    ctx.strokeRect(this.snakeParts[0].x, this.snakeParts[0].y, 20, 20);
-  }
-
-  moveSnake = () => {
+  moveSnake(dx = this.dx, dy = this.dy) {
     const head = { x: this.snakeParts[0].x + dx, y: this.snakeParts[0].y + dy }
 
     this.snakeParts.unshift(head);
@@ -38,9 +22,24 @@ class Snake {
     }
 
     // Snake ate food logic
-    if (head.x === initialFoodX && head.y === initialFoodY) {
-      initialFoodX = Math.floor(Math.random() * 20) * 20;
-      initialFoodY = Math.floor(Math.random() * 20) * 20;
-    }
+    // if (head.x === initialFoodX && head.y === initialFoodY) {
+    //   initialFoodX = Math.floor(Math.random() * 20) * 20;
+    //   initialFoodY = Math.floor(Math.random() * 20) * 20;
+    // }
+  }
+
+  getSnakeParts() {
+    return this.snakeParts;
+  }
+
+  get dx_dy() {
+    return { dx: this.dx, dy: this.dy }
+  }
+
+  set dx_dy({ dx, dy }) {
+    this.dx = dx;
+    this.dy = dy;
   }
 }
+
+module.exports = Snake;
