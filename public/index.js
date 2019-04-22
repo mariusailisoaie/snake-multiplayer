@@ -57,6 +57,9 @@ snake.drawSnake();
 // Update snake position
 const updateGame = () => {
   snake.moveSnake();
+  paintCanvas();
+  snake.drawSnake();
+  drawFood();
 
   setTimeout(() => {
     updateGame();
