@@ -19,17 +19,6 @@ class Snake {
     ctx.fillStyle = headColor;
     ctx.fillRect(this.snakeParts[0].x, this.snakeParts[0].y, 20, 20);
     ctx.strokeRect(this.snakeParts[0].x, this.snakeParts[0].y, 20, 20);
-
-    // Emit message to the server
-    socket.emit('snake', this.snakeParts);
-
-    socket.on('snake', snakeData => {
-      ctx.fillStyle = 'red';
-      snakeData.forEach(snakePart => {
-        ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-        ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
-      });
-    });
   }
 
   moveSnake = () => {
@@ -37,6 +26,9 @@ class Snake {
 
     this.snakeParts.unshift(head);
     this.snakeParts.pop();
+
+    // Emit message to the server
+    socket.emit('snake', this.snakeParts);
 
     if (head.x === 400) {
       head.x = 0;
