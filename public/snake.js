@@ -27,9 +27,6 @@ class Snake {
     this.snakeParts.unshift(head);
     this.snakeParts.pop();
 
-    // Emit message to the server
-    socket.emit('snake', this.snakeParts);
-
     if (head.x === 400) {
       head.x = 0;
     } else if (head.x === -20) {

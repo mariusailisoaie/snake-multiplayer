@@ -49,17 +49,22 @@ document.addEventListener('keydown', e => {
     drawFood();
   }
 });
+const snakeCoordinates = document.getElementById('snakeCoordinates');
+const enemyCoordinates = document.getElementById('enemyCoordinates');
 
 // Initial canvas, snake and food drawing
 paintCanvas();
-snake.drawSnake();
+// snake.drawSnake();
 
 // Update snake position
 const updateGame = () => {
+  // Emit message to the server
+  socket.emit('snake', snake.snakeParts);
+
   snake.moveSnake();
   paintCanvas();
   snake.drawSnake();
-  drawFood();
+  // drawFood();
 
   setTimeout(() => {
     updateGame();
@@ -71,12 +76,15 @@ socket.on('snake', snakeData => {
 
   ctx.fillStyle = 'red';
   snakeData.forEach(snakePart => {
-    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
+    ctx.fillRect(snakePart.x, snakePart.y + 20, 20, 20);
+    ctx.strokeRect(snakePart.x, snakePart.y + 20, 20, 20);
   });
 
   snake.drawSnake();
-  drawFood();
+
+  console.log(snake.snakeParts[0].x, snake.snakeParts[0].y);
+  snakeCoordinates.innerHTML = `Snake: ${snake.snakeParts[0].x} x ${snake.snakeParts[0].y}`
+  enemyCoordinates.innerHTML = `Enemy: ${snakeData[0].x} x ${snakeData[0].y}`
 });
 
 updateGame();
