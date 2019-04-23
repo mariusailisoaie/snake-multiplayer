@@ -36,4 +36,8 @@ io.on('connection', socket => {
   socket.on('changeDirection', data => {
     snake.dx_dy = { dx: data.dx, dy: data.dy };
   });
+
+  socket.on('disconnect', () => {
+    console.log(`a snake disconnected`);
+  });
 });
