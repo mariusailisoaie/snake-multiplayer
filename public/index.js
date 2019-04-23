@@ -12,14 +12,12 @@ socket.on('snake', lobby => {
 
   lobby.forEach(snake => {
     snake.snakeParts.forEach(snakePart => {
-      ctx.fillStyle = snakeColor;
+      ctx.fillStyle = `rgba(${snake.color}, .7)`;
       ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-      ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
     });
 
-    ctx.fillStyle = headColor;
+    ctx.fillStyle = `rgba(${snake.color}, 1)`;
     ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
-    ctx.strokeRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
   });
 });
 
