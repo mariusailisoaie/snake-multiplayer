@@ -12,6 +12,7 @@ const server = app.listen(PORT || process.env.PORT, () => {
 });
 
 const io = socket(server);
+const lobby = [];
 
 io.on('connection', socket => {
   console.log('connection', socket.id);
@@ -25,15 +26,14 @@ io.on('connection', socket => {
     0,
   );
 
+  lobby.push(snake);
+
   setInterval(() => {
     snake.moveSnake();
-    console.log(snake.dx_dy);
-    io.emit('snake', snake.getSnakeParts());
+    io.emit('snake', lobby);
   }, 1000);
 
   socket.on('changeDirection', data => {
-    console.log('log: data', data);
-
     snake.dx_dy = { dx: data.dx, dy: data.dy };
   });
 });
