@@ -6,20 +6,21 @@ const headColor = '#00ab71';
 
 const socket = io.connect('http://localhost:3000');
 
-socket.on('snake', snakeData => {
-  console.log('log: snakeData', snakeData[0]);
+socket.on('snake', lobby => {
   paintCanvas();
   drawFood();
 
-  ctx.fillStyle = snakeColor;
-  snakeData.forEach(snakePart => {
-    ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
-    ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
-  });
+  lobby.forEach(snake => {
+    snake.snakeParts.forEach(snakePart => {
+      ctx.fillStyle = snakeColor;
+      ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
+      ctx.strokeRect(snakePart.x, snakePart.y, 20, 20);
+    });
 
-  ctx.fillStyle = headColor;
-  ctx.fillRect(snakeData[0].x, snakeData[0].y, 20, 20);
-  ctx.strokeRect(snakeData[0].x, snakeData[0].y, 20, 20);
+    ctx.fillStyle = headColor;
+    ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
+    ctx.strokeRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
+  });
 });
 
 const canvas = document.getElementById('canvas');
