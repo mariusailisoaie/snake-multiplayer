@@ -12,7 +12,7 @@ const server = app.listen(PORT || process.env.PORT, () => {
 });
 
 const io = socket(server);
-const lobby = [];
+let lobby = [];
 
 io.on('connection', socket => {
   console.log('connection', socket.id);
@@ -24,6 +24,7 @@ io.on('connection', socket => {
     ],
     20,
     0,
+    socket.id
   );
 
   lobby.push(snake);
@@ -38,6 +39,7 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    console.log(`a snake disconnected`);
+    lobby = lobby.filter(snake => snake.id !== socket.id);
+    console.log(`a snake left the game`);
   });
 });
