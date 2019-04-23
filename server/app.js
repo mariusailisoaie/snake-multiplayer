@@ -32,7 +32,7 @@ io.on('connection', socket => {
   setInterval(() => {
     snake.moveSnake();
     io.emit('snake', lobby);
-  }, 1000);
+  }, 500);
 
   socket.on('changeDirection', data => {
     snake.dx_dy = { dx: data.dx, dy: data.dy };
