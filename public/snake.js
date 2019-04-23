@@ -1,9 +1,10 @@
 class Snake {
-  constructor(snakeParts, dx, dy, id) {
+  constructor(snakeParts, dx, dy, id, color) {
     this.snakeParts = snakeParts;
     this.dx = dx;
     this.dy = dy;
     this.id = id;
+    this.color = color;
   }
 
   moveSnake(dx = this.dx, dy = this.dy) {
