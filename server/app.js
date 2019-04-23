@@ -24,7 +24,8 @@ io.on('connection', socket => {
     ],
     20,
     0,
-    socket.id
+    socket.id,
+    `${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}`,
   );
 
   lobby.push(snake);
