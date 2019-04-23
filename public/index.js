@@ -67,6 +67,3 @@ document.addEventListener('keydown', e => {
     console.log('q');
   }
 });
-
-// const snakeCoordinates = document.getElementById('snakeCoordinates');
-// const enemyCoordinates = document.getElementById('enemyCoordinates');
