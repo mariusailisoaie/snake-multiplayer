@@ -6,8 +6,10 @@ const headColor = '#00ab71';
 
 const socket = io.connect('http://localhost:3000');
 
-socket.on('snake', lobby => {
+socket.on('snake', ({ lobby, food }) => {
   paintCanvas();
+  ctx.fillStyle = foodColor;
+  ctx.fillRect(food.x, food.y, 20, 20);
 
   lobby.forEach(snake => {
     snake.snakeParts.forEach(snakePart => {
