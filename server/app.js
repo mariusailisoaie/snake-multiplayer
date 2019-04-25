@@ -14,8 +14,12 @@ const server = app.listen(PORT || process.env.PORT, () => {
 const io = socket(server);
 let lobby = [];
 
+let food = { x: Math.floor(Math.random() * 20) * 20, y: Math.floor(Math.random() * 20) * 20 }
+
 io.on('connection', socket => {
   console.log('connection', socket.id);
+
+
   const snake = new Snake(
     [
       { x: 180, y: 200 },
@@ -32,7 +36,7 @@ io.on('connection', socket => {
 
   setInterval(() => {
     snake.moveSnake();
-    io.emit('snake', lobby);
+    io.emit('snake', { lobby, food });
   }, 500);
 
   socket.on('changeDirection', data => {
