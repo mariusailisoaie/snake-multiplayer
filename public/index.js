@@ -3,6 +3,7 @@ const borderColor = '#000';
 const foodColor = '#513814';
 const snakeColor = '#006442';
 const headColor = '#00ab71';
+const playerList = document.getElementById('player-list');
 
 const socket = io.connect('http://localhost:3000');
 
@@ -19,6 +20,16 @@ socket.on('snake', ({ lobby, food }) => {
 
     ctx.fillStyle = `rgba(${snake.color}, 1)`;
     ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
+  });
+});
+
+socket.on('connectedPlayer', connectedPlayers => {
+  playerList.innerHTML = '';
+
+  connectedPlayers.forEach(player => {
+    let li = document.createElement('li');
+    li.innerText = `Player ${player}`;
+    playerList.appendChild(li);
   });
 });
 
