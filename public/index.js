@@ -49,20 +49,20 @@ paintCanvas();
 // Change snake direction using arrow keys 
 document.addEventListener('keydown', e => {
   if (e.code.toLowerCase() === 'arrowup') {
-    dx = 0;
-    dy = -20;
+    let dx = 0;
+    let dy = -20;
     socket.emit('changeDirection', { dx, dy });
   } else if (e.code.toLowerCase() === 'arrowdown') {
-    dx = 0;
-    dy = 20;
+    let dx = 0;
+    let dy = 20;
     socket.emit('changeDirection', { dx, dy });
   } else if (e.code.toLowerCase() === 'arrowleft') {
-    dx = -20;
-    dy = 0;
+    let dx = -20;
+    let dy = 0;
     socket.emit('changeDirection', { dx, dy });
   } else if (e.code.toLowerCase() === 'arrowright') {
-    dx = 20;
-    dy = 0;
+    let dx = 20;
+    let dy = 0;
     socket.emit('changeDirection', { dx, dy });
   } else if (e.key === 'q') {
     console.log('q');
