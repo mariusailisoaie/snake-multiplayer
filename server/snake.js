@@ -5,7 +5,7 @@ class Snake {
     this.dy = dy;
     this.id = id;
     this.color = color;
-    this.score = 0;
+    this.score = score;
   }
 
   moveSnake(dx = this.dx, dy = this.dy) {
