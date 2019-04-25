@@ -5,7 +5,7 @@ const snakeColor = '#006442';
 const headColor = '#00ab71';
 const playerList = document.getElementById('player-list');
 
-const socket = io.connect(`http://localhost:${process.env.PORT}`);
+const socket = io();
 
 socket.on('snake', ({ lobby, food }) => {
   paintCanvas();
