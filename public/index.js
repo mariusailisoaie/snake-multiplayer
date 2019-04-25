@@ -4,6 +4,7 @@ const foodColor = '#513814';
 const snakeColor = '#006442';
 const headColor = '#00ab71';
 const playerList = document.getElementById('player-list');
+const score = document.getElementById('score');
 
 const socket = io();
 
@@ -13,6 +14,7 @@ socket.on('snake', ({ lobby, food }) => {
   ctx.fillRect(food.x, food.y, 20, 20);
 
   lobby.forEach(snake => {
+    score.innerHTML = `Score: ${snake.score}`;
     snake.snakeParts.forEach(snakePart => {
       ctx.fillStyle = `rgba(${snake.color}, .7)`;
       ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
