@@ -19,7 +19,6 @@ let food = { x: Math.floor(Math.random() * 20) * 20, y: Math.floor(Math.random()
 io.on('connection', socket => {
   console.log('connection', socket.id);
 
-
   const snake = new Snake(
     [
       { x: 180, y: 200 },
@@ -36,6 +35,11 @@ io.on('connection', socket => {
 
   setInterval(() => {
     snake.moveSnake();
+
+    if (snake.snakeParts[0].x === food.x && snake.snakeParts[0].y === food.y) {
+      snake.snakeParts.push({ x: food.x, y: food.y });
+    }
+
     io.emit('snake', { lobby, food });
   }, 500);
 
