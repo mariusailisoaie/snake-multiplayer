@@ -1,6 +1,6 @@
 const express = require('express');
 const socket = require('socket.io');
-const Snake = require('../public/snake');
+const Snake = require('./snake');
 
 const app = express();
 
