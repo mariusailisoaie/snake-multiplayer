@@ -41,6 +41,7 @@ io.on('connection', socket => {
       snake.snakeParts.push({ x: food.x, y: food.y });
       food.x = Math.floor(Math.random() * 20) * 20;
       food.y = Math.floor(Math.random() * 20) * 20;
+      snake.score++;
     }
 
     io.emit('snake', { lobby, food });
