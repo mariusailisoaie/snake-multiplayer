@@ -38,6 +38,8 @@ io.on('connection', socket => {
 
     if (snake.snakeParts[0].x === food.x && snake.snakeParts[0].y === food.y) {
       snake.snakeParts.push({ x: food.x, y: food.y });
+      food.x = Math.floor(Math.random() * 20) * 20;
+      food.y = Math.floor(Math.random() * 20) * 20;
     }
 
     io.emit('snake', { lobby, food });
