@@ -13,8 +13,12 @@ socket.on('snake', ({ lobby, food }) => {
   ctx.fillStyle = foodColor;
   ctx.fillRect(food.x, food.y, 20, 20);
 
+  playerList.innerHTML = '';
   lobby.forEach(snake => {
-    score.innerHTML = `Score: ${snake.score}`;
+    let li = document.createElement('li');
+    li.innerText = `Player ${snake.id} / Score: ${snake.score}`;
+    playerList.appendChild(li);
+
     snake.snakeParts.forEach(snakePart => {
       ctx.fillStyle = `rgba(${snake.color}, .7)`;
       ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
