@@ -22,12 +22,6 @@ class Snake {
     } else if (head.y === -20) {
       head.y = 380;
     }
-
-    // Snake ate food logic
-    // if (head.x === initialFoodX && head.y === initialFoodY) {
-    //   initialFoodX = Math.floor(Math.random() * 20) * 20;
-    //   initialFoodY = Math.floor(Math.random() * 20) * 20;
-    // }
   }
 
   getSnakeParts() {

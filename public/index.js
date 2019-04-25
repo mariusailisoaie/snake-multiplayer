@@ -8,7 +8,6 @@ const socket = io.connect('http://localhost:3000');
 
 socket.on('snake', lobby => {
   paintCanvas();
-  drawFood();
 
   lobby.forEach(snake => {
     snake.snakeParts.forEach(snakePart => {
@@ -31,17 +30,8 @@ const paintCanvas = () => {
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
 }
 
-let initialFoodX = Math.floor(Math.random() * 20) * 20;
-let initialFoodY = Math.floor(Math.random() * 20) * 20;
-
-const drawFood = (foodX = initialFoodX, foodY = initialFoodY) => {
-  ctx.fillStyle = foodColor;
-  ctx.fillRect(foodX, foodY, 20, 20);
-}
-
-// Initial canvas, snake and food drawing
+// Initial canvas drawing
 paintCanvas();
-drawFood();
 
 // Change snake direction using arrow keys 
 document.addEventListener('keydown', e => {
