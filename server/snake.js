@@ -12,6 +12,12 @@ class Snake {
   moveSnake(dx = this.dx, dy = this.dy) {
     const head = { x: this.snakeParts[0].x + dx, y: this.snakeParts[0].y + dy }
 
+    this.snakeParts.forEach(snakePart => {
+      if (head.x === snakePart.x && head.y === snakePart.y) {
+        console.log('snake dead');
+      }
+    });
+
     this.snakeParts.unshift(head);
     this.snakeParts.pop();
 
