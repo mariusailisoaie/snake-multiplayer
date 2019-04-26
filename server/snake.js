@@ -1,5 +1,6 @@
 class Snake {
-  constructor(snakeParts, dx, dy, id, color, score) {
+  constructor(username, snakeParts, dx, dy, id, color, score) {
+    this.username = username;
     this.snakeParts = snakeParts;
     this.dx = dx;
     this.dy = dy;
@@ -36,6 +37,14 @@ class Snake {
   set dx_dy({ dx, dy }) {
     this.dx = dx;
     this.dy = dy;
+  }
+
+  get getUsername() {
+    return this.username;
+  }
+
+  set setUsername(username) {
+    this.username = username;
   }
 }
 
