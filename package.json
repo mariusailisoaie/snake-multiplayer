@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cd server && node app.js"
+    "start": "cd server && node app.js",
+    "dev": "cd server && nodemon app.js"
   },
   "repository": {
     "type": "git",
