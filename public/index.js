@@ -5,38 +5,71 @@ const snakeColor = '#006442';
 const headColor = '#00ab71';
 const playerList = document.getElementById('player-list');
 const score = document.getElementById('score');
+const playBtn = document.getElementById('play-btn');
+const username = document.getElementById('username');
 
-const socket = io();
+const startGame = () => {
+  const socket = io();
 
-socket.on('snake', ({ lobby, food }) => {
-  paintCanvas();
-  ctx.fillStyle = foodColor;
-  ctx.fillRect(food.x, food.y, 20, 20);
+  socket.emit('username', username.value);
 
-  playerList.innerHTML = '';
-  lobby.forEach(snake => {
-    let li = document.createElement('li');
-    li.innerText = `Player ${snake.id} / Score: ${snake.score}`;
-    playerList.appendChild(li);
+  socket.on('snake', ({ lobby, food }) => {
+    paintCanvas();
+    ctx.fillStyle = foodColor;
+    ctx.fillRect(food.x, food.y, 20, 20);
 
-    snake.snakeParts.forEach(snakePart => {
-      ctx.fillStyle = `rgba(${snake.color}, .7)`;
-      ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
+    playerList.innerHTML = '';
+    lobby.forEach(snake => {
+      let li = document.createElement('li');
+      li.innerText = `${snake.username} / Score: ${snake.score}`;
+      playerList.appendChild(li);
+
+      snake.snakeParts.forEach(snakePart => {
+        ctx.fillStyle = `rgba(${snake.color}, .7)`;
+        ctx.fillRect(snakePart.x, snakePart.y, 20, 20);
+      });
+
+      ctx.fillStyle = `rgba(${snake.color}, 1)`;
+      ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
     });
-
-    ctx.fillStyle = `rgba(${snake.color}, 1)`;
-    ctx.fillRect(snake.snakeParts[0].x, snake.snakeParts[0].y, 20, 20);
   });
-});
 
-socket.on('connectedPlayer', connectedPlayers => {
-  playerList.innerHTML = '';
+  socket.on('connectedPlayer', connectedPlayers => {
+    playerList.innerHTML = '';
 
-  connectedPlayers.forEach(player => {
-    let li = document.createElement('li');
-    li.innerText = `Player ${player}`;
-    playerList.appendChild(li);
+    connectedPlayers.forEach(player => {
+      let li = document.createElement('li');
+      li.innerText = `Player ${player}`;
+      playerList.appendChild(li);
+    });
   });
+
+  // Change snake direction using arrow keys 
+  document.addEventListener('keydown', e => {
+    if (e.code.toLowerCase() === 'arrowup') {
+      let dx = 0;
+      let dy = -20;
+      socket.emit('changeDirection', { dx, dy });
+    } else if (e.code.toLowerCase() === 'arrowdown') {
+      let dx = 0;
+      let dy = 20;
+      socket.emit('changeDirection', { dx, dy });
+    } else if (e.code.toLowerCase() === 'arrowleft') {
+      let dx = -20;
+      let dy = 0;
+      socket.emit('changeDirection', { dx, dy });
+    } else if (e.code.toLowerCase() === 'arrowright') {
+      let dx = 20;
+      let dy = 0;
+      socket.emit('changeDirection', { dx, dy });
+    } else if (e.key === 'q') {
+      console.log('q');
+    }
+  });
+}
+
+playBtn.addEventListener('click', () => {
+  startGame();
 });
 
 const canvas = document.getElementById('canvas');
@@ -51,26 +84,3 @@ const paintCanvas = () => {
 
 // Initial canvas drawing
 paintCanvas();
-
-// Change snake direction using arrow keys 
-document.addEventListener('keydown', e => {
-  if (e.code.toLowerCase() === 'arrowup') {
-    let dx = 0;
-    let dy = -20;
-    socket.emit('changeDirection', { dx, dy });
-  } else if (e.code.toLowerCase() === 'arrowdown') {
-    let dx = 0;
-    let dy = 20;
-    socket.emit('changeDirection', { dx, dy });
-  } else if (e.code.toLowerCase() === 'arrowleft') {
-    let dx = -20;
-    let dy = 0;
-    socket.emit('changeDirection', { dx, dy });
-  } else if (e.code.toLowerCase() === 'arrowright') {
-    let dx = 20;
-    let dy = 0;
-    socket.emit('changeDirection', { dx, dy });
-  } else if (e.key === 'q') {
-    console.log('q');
-  }
-});
