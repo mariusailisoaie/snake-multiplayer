@@ -62,8 +62,6 @@ const startGame = () => {
       let dx = 20;
       let dy = 0;
       socket.emit('changeDirection', { dx, dy });
-    } else if (e.key === 'q') {
-      console.log('q');
     }
   });
 }
