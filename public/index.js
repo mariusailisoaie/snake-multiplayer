@@ -66,8 +66,12 @@ const startGame = () => {
   });
 }
 
-playBtn.addEventListener('click', () => {
-  startGame();
+username.addEventListener('keyup', e => {
+  e.preventDefault();
+  if (e.keyCode === 13) {
+    playBtn.click();
+    username.value = '';
+  }
 });
 
 const canvas = document.getElementById('canvas');
