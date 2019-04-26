@@ -50,7 +50,7 @@ io.on('connection', socket => {
     }
 
     io.emit('snake', { lobby, food });
-  }, 500);
+  }, 200);
 
   socket.on('changeDirection', data => {
     snake.dx_dy = { dx: data.dx, dy: data.dy };
