@@ -7,6 +7,7 @@ const playerList = document.getElementById('player-list');
 const score = document.getElementById('score');
 const playBtn = document.getElementById('play-btn');
 const username = document.getElementById('username');
+let snakeDirectionX = null, snakeDirectionY = null;
 
 const startGame = () => {
   const socket = io();
@@ -20,6 +21,9 @@ const startGame = () => {
 
     playerList.innerHTML = '';
     lobby.forEach(snake => {
+      snakeDirectionX = snake.dx;
+      snakeDirectionY = snake.dy;
+
       let li = document.createElement('li');
       li.innerText = `${snake.username} / Score: ${snake.score}`;
       playerList.appendChild(li);
@@ -46,19 +50,19 @@ const startGame = () => {
 
   // Change snake direction using arrow keys 
   document.addEventListener('keydown', e => {
-    if (e.code.toLowerCase() === 'arrowup') {
+    if (e.code.toLowerCase() === 'arrowup' && snakeDirectionY !== 20) {
       let dx = 0;
       let dy = -20;
       socket.emit('changeDirection', { dx, dy });
-    } else if (e.code.toLowerCase() === 'arrowdown') {
+    } else if (e.code.toLowerCase() === 'arrowdown' && snakeDirectionY !== -20) {
       let dx = 0;
       let dy = 20;
       socket.emit('changeDirection', { dx, dy });
-    } else if (e.code.toLowerCase() === 'arrowleft') {
+    } else if (e.code.toLowerCase() === 'arrowleft' && snakeDirectionX !== 20) {
       let dx = -20;
       let dy = 0;
       socket.emit('changeDirection', { dx, dy });
-    } else if (e.code.toLowerCase() === 'arrowright') {
+    } else if (e.code.toLowerCase() === 'arrowright' && snakeDirectionX !== -20) {
       let dx = 20;
       let dy = 0;
       socket.emit('changeDirection', { dx, dy });
