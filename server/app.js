@@ -20,6 +20,7 @@ io.on('connection', socket => {
   console.log('connection', socket.id);
 
   const snake = new Snake(
+    null,
     [
       { x: 180, y: 200 },
       { x: 160, y: 200 },
@@ -31,6 +32,10 @@ io.on('connection', socket => {
     `${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}`,
     0
   );
+
+  socket.on('username', username => {
+    snake.setUsername = username;
+  });
 
   lobby.push(snake);
 
