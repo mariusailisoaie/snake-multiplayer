@@ -1,6 +1,7 @@
 const express = require('express');
 const socket = require('socket.io');
 const Snake = require('./snake');
+const fs = require('fs');
 
 const app = express();
 
@@ -13,6 +14,9 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server);
 let lobby = [];
+const scoreTable = {
+  scores: []
+}
 
 let food = { x: Math.floor(Math.random() * 20) * 20, y: Math.floor(Math.random() * 20) * 20 }
 
@@ -47,6 +51,13 @@ io.on('connection', socket => {
       food.x = Math.floor(Math.random() * 20) * 20;
       food.y = Math.floor(Math.random() * 20) * 20;
       snake.score++;
+
+      scoreTable.scores.push({ user: snake.username, score: snake.score });
+      const json = JSON.stringify(scoreTable);
+
+      fs.writeFile('db.json', json, err => {
+        if (err) throw err;
+      });
     }
 
     io.emit('snake', { lobby, food });
