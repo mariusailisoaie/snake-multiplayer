@@ -10,11 +10,19 @@ class Snake {
   }
 
   moveSnake(dx = this.dx, dy = this.dy) {
-    const head = { x: this.snakeParts[0].x + dx, y: this.snakeParts[0].y + dy }
+    let head = { x: this.snakeParts[0].x + dx, y: this.snakeParts[0].y + dy }
 
     this.snakeParts.forEach(snakePart => {
       if (head.x === snakePart.x && head.y === snakePart.y) {
-        console.log('snake dead');
+        this.snakeParts = [
+          { x: 180, y: 200 },
+          { x: 160, y: 200 },
+          { x: 140, y: 200 },
+        ]
+        this.dx = 20;
+        this.dy = 0;
+        this.score = 0;
+        head = { x: this.snakeParts[0].x + dx, y: this.snakeParts[0].y + dy }
       }
     });
 
