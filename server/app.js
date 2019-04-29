@@ -52,29 +52,25 @@ io.on('connection', socket => {
 
       fs.readFile('db.json', (err, data) => {
         if (err) {
-          console.log('ERR ->', err);
         } else {
           if (data.length > 0) {
             data = JSON.parse(data);
-            console.log(data);
 
-            data.find((item, index) => {
-              if (item.user === snake.username) {
-                console.log('snake.username === item.user');
-                data[index] = { user: item.username, score: snake.score }
+            for (let i = data.length - 1; i >= 0; i--) {
+              if (snake.username === data[i].user) {
+                data[i] = { user: snake.username, score: snake.score }
+                break;
               } else {
                 data.push({ user: snake.username, score: snake.score });
+                break;
               }
-            });
-            console.log('data after forEach', data);
-
+            }
             const json = JSON.stringify(data);
 
             fs.writeFile('db.json', json, err => {
               if (err) throw err;
             });
           } else {
-            console.log('No data in scores array...');
             scoreTable.push({ user: snake.username, score: snake.score });
             const json = JSON.stringify(scoreTable);
 
