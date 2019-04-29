@@ -50,11 +50,39 @@ io.on('connection', socket => {
       food.y = Math.floor(Math.random() * 20) * 20;
       snake.score++;
 
-      scoreTable.push({ user: snake.username, score: snake.score });
-      const json = JSON.stringify(scoreTable);
+      fs.readFile('db.json', (err, data) => {
+        if (err) {
+          console.log('ERR ->', err);
+        } else {
+          if (data.length > 0) {
+            data = JSON.parse(data);
+            console.log(data);
 
-      fs.writeFile('db.json', json, err => {
-        if (err) throw err;
+            data.find((item, index) => {
+              if (item.user === snake.username) {
+                console.log('snake.username === item.user');
+                data[index] = { user: item.username, score: snake.score }
+              } else {
+                data.push({ user: snake.username, score: snake.score });
+              }
+            });
+            console.log('data after forEach', data);
+
+            const json = JSON.stringify(data);
+
+            fs.writeFile('db.json', json, err => {
+              if (err) throw err;
+            });
+          } else {
+            console.log('No data in scores array...');
+            scoreTable.push({ user: snake.username, score: snake.score });
+            const json = JSON.stringify(scoreTable);
+
+            fs.writeFile('db.json', json, err => {
+              if (err) throw err;
+            });
+          }
+        }
       });
     }
 
