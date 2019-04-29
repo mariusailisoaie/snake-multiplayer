@@ -14,9 +14,7 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server);
 let lobby = [];
-const scoreTable = {
-  scores: []
-}
+const scoreTable = [];
 
 let food = { x: Math.floor(Math.random() * 20) * 20, y: Math.floor(Math.random() * 20) * 20 }
 
@@ -52,7 +50,7 @@ io.on('connection', socket => {
       food.y = Math.floor(Math.random() * 20) * 20;
       snake.score++;
 
-      scoreTable.scores.push({ user: snake.username, score: snake.score });
+      scoreTable.push({ user: snake.username, score: snake.score });
       const json = JSON.stringify(scoreTable);
 
       fs.writeFile('db.json', json, err => {
