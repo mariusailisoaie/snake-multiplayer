@@ -1,3 +1,12 @@
+// Sets
+const map = new Map();
+
+map.set('marius', 12);
+map.set('john', 1);
+
+console.log(map.entries());
+
+/*
 const numbers = [];
 
 for (let i = 0; i < 100; i++) {
@@ -10,7 +19,6 @@ console.log(numbers.sort((a, b) => a - b));
 
 // console.log(Math.floor());
 
-/*
 
 
 for (let i = 0; i < 100; i++) {
