@@ -14,7 +14,7 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server);
 let lobby = [];
-const scoreTable = [];
+const scoreTable = new Map();
 
 let food = { x: Math.floor(Math.random() * 20) * 20, y: Math.floor(Math.random() * 20) * 20 }
 
@@ -50,36 +50,12 @@ io.on('connection', socket => {
       food.y = Math.floor(Math.random() * 20) * 20;
       snake.score++;
 
-      fs.readFile('db.json', (err, data) => {
-        if (err) {
-        } else {
-          if (data.length > 0) {
-            data = JSON.parse(data);
+      scoreTable.set(snake.username, snake.score);
+      console.log(scoreTable.entries());
 
-            for (let i = data.length - 1; i >= 0; i--) {
-              if (snake.username === data[i].user) {
-                data[i] = { user: snake.username, score: snake.score }
-                break;
-              } else {
-                data.push({ user: snake.username, score: snake.score });
-                break;
-              }
-            }
-            const json = JSON.stringify(data);
-
-            fs.writeFile('db.json', json, err => {
-              if (err) throw err;
-            });
-          } else {
-            scoreTable.push({ user: snake.username, score: snake.score });
-            const json = JSON.stringify(scoreTable);
-
-            fs.writeFile('db.json', json, err => {
-              if (err) throw err;
-            });
-          }
-        }
-      });
+      // fs.writeFile('db.json', json, err => {
+      //   if (err) throw err;
+      // });
     }
 
     io.emit('snake', { lobby, food });
